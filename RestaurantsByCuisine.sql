@@ -23,9 +23,9 @@ DROP TABLE IF EXISTS `cuisines`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `cuisines` (
-  `CuisineId` int NOT NULL AUTO_INCREMENT,
+  `CategoryId` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`CuisineId`)
+  PRIMARY KEY (`CategoryId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -46,10 +46,10 @@ DROP TABLE IF EXISTS `restaurants`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `restaurants` (
-  `RestaurantId` int NOT NULL AUTO_INCREMENT,
+  `ItemId` int NOT NULL AUTO_INCREMENT,
   `Description` varchar(255) DEFAULT NULL,
-  `CuisineId` int DEFAULT '0',
-  PRIMARY KEY (`RestaurantId`)
+  `CategoryId` int DEFAULT '0',
+  PRIMARY KEY (`ItemId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -71,4 +71,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-03-08 13:22:40
+-- Dump completed on 2023-03-08 14:32:33
