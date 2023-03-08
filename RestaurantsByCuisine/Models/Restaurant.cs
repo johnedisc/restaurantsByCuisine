@@ -1,36 +1,36 @@
 using System.Collections.Generic;
 using MySqlConnector;
 
-namespace ToDoList.Models
+namespace RestaurantsByCuisine.Models
 {
-  public class Item
+  public class Restaurant
   {
-    public int CategoryId { get; set; }
-    public Category Category { get; set; }
+    public int CuisineId { get; set; }
+    public Cuisine Cuisine { get; set; }
     public string Description { get; set; }
-    public int ItemId { get; set; }
+    public int RestaurantId { get; set; }
 
-    public Item(string description)
+    public Restaurant(string description)
     {
       Description = description;
     }
-    public Item(string description, int id)
+    public Restaurant(string description, int id)
     {
       Description = description;
       Id = id;
     }
 
-    public override bool Equals(System.Object otherItem)
+    public override bool Equals(System.Object otherRestaurant)
     {
-      if (!(otherItem is Item))
+      if (!(otherRestaurant is Restaurant))
       {
         return false;
       }
       else
       {
-        Item newItem = (Item) otherItem;
-        bool idEquality = (this.Id == newItem.Id);
-        bool descriptionEquality = (this.Description == newItem.Description);
+        Restaurant newRestaurant = (Restaurant) otherRestaurant;
+        bool idEquality = (this.Id == newRestaurant.Id);
+        bool descriptionEquality = (this.Description == newRestaurant.Description);
         return (idEquality && descriptionEquality);
       }
     }
@@ -46,10 +46,10 @@ namespace ToDoList.Models
       conn.Open();
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
 
-      cmd.CommandText = "INSERT INTO items (description) VALUES (@ItemDescription);";
+      cmd.CommandText = "INSERT INTO restaurants (description) VALUES (@RestaurantDescription);";
 
       MySqlParameter param = new MySqlParameter();
-      param.ParameterName = "@ItemDescription";
+      param.ParameterName = "@RestaurantDescription";
       param.Value = this.Description;
 
       cmd.Parameters.Add(param);    
@@ -65,13 +65,13 @@ namespace ToDoList.Models
       }
     }
 
-    public static Item Find(int id)
+    public static Restaurant Find(int id)
     {
       MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
       conn.Open();
 
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = "SELECT * FROM `items` WHERE id = @ThisId;";
+      cmd.CommandText = "SELECT * FROM `restaurants` WHERE id = @ThisId;";
 
       MySqlParameter param = new MySqlParameter();
       param.ParameterName = "@ThisId";
@@ -80,47 +80,47 @@ namespace ToDoList.Models
       cmd.Parameters.Add(param);
 
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
-      int itemId = 0;
-      string itemDescription = "";
+      int restaurantId = 0;
+      string restaurantDescription = "";
       while (rdr.Read())
       {
-        itemId = rdr.GetInt32(0);
-        itemDescription = rdr.GetString(1);
+        restaurantId = rdr.GetInt32(0);
+        restaurantDescription = rdr.GetString(1);
       }
-      Item foundItem = new Item(itemDescription, itemId);
+      Restaurant foundRestaurant = new Restaurant(restaurantDescription, restaurantId);
 
       conn.Close();
       if (conn != null)
       {
         conn.Dispose();
       }
-      return foundItem;
+      return foundRestaurant;
     }
 
-    public static List<Item> GetAll()
+    public static List<Restaurant> GetAll()
     {
-      List<Item> allItems = new List<Item> { };
+      List<Restaurant> allRestaurants = new List<Restaurant> { };
 
       MySqlConnection conn = new MySqlConnection(DBConfiguration.ConnectionString);
       conn.Open();
 
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = "SELECT * FROM items;";
+      cmd.CommandText = "SELECT * FROM restaurants;";
 
       MySqlDataReader rdr = cmd.ExecuteReader() as MySqlDataReader;
       while (rdr.Read())
       {
-          int itemId = rdr.GetInt32(0);
-          string itemDescription = rdr.GetString(1);
-          Item newItem = new Item(itemDescription, itemId);
-          allItems.Add(newItem);
+          int restaurantId = rdr.GetInt32(0);
+          string restaurantDescription = rdr.GetString(1);
+          Restaurant newRestaurant = new Restaurant(restaurantDescription, restaurantId);
+          allRestaurants.Add(newRestaurant);
       }
       conn.Close();
       if (conn != null)
       {
           conn.Dispose();
       }
-      return allItems;
+      return allRestaurants;
     }
 
     public static void ClearAll()
@@ -129,7 +129,7 @@ namespace ToDoList.Models
       conn.Open();
       
       MySqlCommand cmd = conn.CreateCommand() as MySqlCommand;
-      cmd.CommandText = "DELETE FROM items;";
+      cmd.CommandText = "DELETE FROM restaurants;";
       cmd.ExecuteNonQuery();
 
       conn.Close();

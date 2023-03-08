@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using ToDoList.Models;
+using RestarauntsByCuisine.Models;
 
-namespace ToDoList
+namespace RestarauntsByCuisine
 {
   class Program
   {
@@ -13,7 +13,7 @@ namespace ToDoList
 
       builder.Services.AddControllersWithViews();
 
-      builder.Services.AddDbContext<ToDoListContext>(
+      builder.Services.AddDbContext<RestarauntsByCuisineContext>(
                         dbContextOptions => dbContextOptions
                           .UseMySql(
                             builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
@@ -38,29 +38,3 @@ namespace ToDoList
   }
 }
 
-
-
-
-
-
-
-// using System.IO;
-// using Microsoft.AspNetCore.Hosting;
-
-// namespace ToDoList
-// {
-//   public class Program
-//   {
-//     public static void Main(string[] args)
-//     {
-//       var host = new WebHostBuilder()
-//         .UseKestrel()
-//         .UseContentRoot(Directory.GetCurrentDirectory())
-//         .UseIISIntegration()
-//         .UseStartup<Startup>()
-//         .Build();
-
-//       host.Run();
-//     }
-//   }
-// }
