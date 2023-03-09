@@ -7,9 +7,7 @@
         * every time database is referenced, DbContext class is used to do so
 * database naming conventions with Entity Framework
     * database column names/case must match property names/case of Models
-    * name primary keys with the word Id and the class name thus 
-    ```csharp 
-    ProductId ``` 
+    * name primary keys with the word Id and the class name thus ProductId
 ``` mermaid
 flowchart TB
 
