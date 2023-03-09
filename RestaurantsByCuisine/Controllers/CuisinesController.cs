@@ -1,60 +1,36 @@
-using System.Collections.Generic;
-using System;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantsByCuisine.Models;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RestaurantsByCuisine.Controllers
 {
   public class CuisinesController : Controller
   {
-
-    [HttpGet("/cuisines")]
+    private readonly RestaurantsByCuisineContext _db;
+    public CuisinesController(RestaurantsByCuisineContext db)
+    {
+      _db = db;
+    }
+    
     public ActionResult Index()
     {
-      List<Cuisine> allCuisines = Cuisine.GetAll();
-      return View(allCuisines);
+      List<Cuisine> model = _db.Cuisines.ToList();
+      return View(model);
     }
 
-    [HttpGet("/cuisines/new")]
-    public ActionResult New()
+    public ActionResult Create()
     {
       return View();
     }
 
-    [HttpPost("/cuisines")]
-    public ActionResult Create(string cuisineName)
+    [HttpPost]
+    public ActionResult Create(Cuisine category)
     {
-      Cuisine newCuisine = new Cuisine(cuisineName);
+      _db.Cuisines.Add(category);
+      _db.SaveChanges();
       return RedirectToAction("Index");
-    }
-
-    [HttpGet("/cuisines/{id}")]
-    public ActionResult Show(int id)
-    {
-      Dictionary<string, object> model = new Dictionary<string, object>();
-      Cuisine selectedCuisine = Cuisine.Find(id);
-      List<Restaurant> categoryRestaurants = selectedCuisine.Restaurants;
-      model.Add("cuisine", selectedCuisine);
-      model.Add("restaurants", cuisineRestaurants);
-      return View(model);
-    }
-
-
-    // This one creates new Items within a given Category, not new Cuisines:
-
-    [HttpPost("/cuisines/{cuisineId}/restaurants")]
-    public ActionResult Create(int cuisineId, string restaurantDescription)
-    {
-      Dictionary<string, object> model = new Dictionary<string, object>();
-      Cuisine foundCuisine = Cuisine.Find(cuisineId);
-      Restaurant newRestaurant = new Restaurant(restaurantDescription);
-      newRestaraunt.Save();    // New code
-      foundCuisine.AddRestaurant(newRestaurant);
-      List<Restaurant> cuisineRestaurants = foundCuisine.Restaurants;
-      model.Add("restaurants", cuisineRestaurants);
-      model.Add("cuisine", foundCuisine);
-      return View("Show", model);
     }
 
     public ActionResult Details(int id)
@@ -63,6 +39,35 @@ namespace RestaurantsByCuisine.Controllers
                                   .Include(cuisine => cuisine.Restaurants)
                                   .FirstOrDefault(cuisine => cuisine.CuisineId == id);
       return View(thisCuisine);
+    }
+
+    public ActionResult Edit(int id)
+    {
+      Cuisine thisCuisine = _db.Cuisines.FirstOrDefault(category => category.CuisineId == id);
+      return View(thisCuisine);
+    }
+
+    [HttpPost]
+    public ActionResult Edit(Cuisine category)
+    {
+      _db.Cuisines.Update(category);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
+    }
+
+    public ActionResult Delete(int id)
+    {
+      Cuisine thisCuisine = _db.Cuisines.FirstOrDefault(category => category.CuisineId == id);
+      return View(thisCuisine);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    public ActionResult DeleteConfirmed(int id)
+    {
+      Cuisine thisCuisine = _db.Cuisines.FirstOrDefault(category => category.CuisineId == id);
+      _db.Cuisines.Remove(thisCuisine);
+      _db.SaveChanges();
+      return RedirectToAction("Index");
     }
   }
 }

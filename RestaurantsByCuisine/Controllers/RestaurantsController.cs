@@ -1,24 +1,26 @@
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
 using RestaurantsByCuisine.Models;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace RestaurantsByCuisine.Controllers
 {
   public class RestaurantsController : Controller
   {
-    private readonly RestaurantsByCusineContext _db;
+    private readonly RestaurantsByCuisineContext _db;
 
-    public RestaurantsController(RestaurantsByCusineContext db)
+    public RestaurantsController(RestaurantsByCuisineContext db)
     {
       _db = db;
     }
 
     public ActionResult Index()
     {
-      List<Restaurant> model = _db.Restaurants.Include(restaurant => restaurant.Cuisine).ToList();
+      List<Restaurant> model = _db.Restaurants
+                            .Include(restaurant => restaurant.Cuisine)
+                            .ToList();
       ViewBag.PageTitle = "View All Restaurants";
       return View(model);
     }

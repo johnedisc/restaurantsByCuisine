@@ -11,10 +11,14 @@
   <h3>No cuisines have been added yet!</h3>
 } 
 
-@foreach (Cuisine cuisine in Model)
-{
-  <h3><a href='/cuisine/@cuisine.Id'>@cuisine.Name</a></h3>
-}
+<ul>
+  @foreach(Cuisine cuisine in Model)
+  {
+    <li>@Html.ActionLink($"{cuisine.Name}", "Details", new { id = cuisine.CuisineId })</li>
+  }
+</ul>
 
-<p><a href='/'>Back home</a></p>
+<p>@Html.ActionLink("Add new cuisine", "Create")</p>
+<p>@Html.ActionLink("Add new Restaurants", "Create", "Restaurants")</p>
 <p>@Html.ActionLink("Home", "Index", "Home")</p>
+

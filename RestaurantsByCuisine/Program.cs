@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using RestarauntsByCuisine.Models;
+using RestaurantsByCuisine.Models;
 
 namespace RestarauntsByCuisine
 {
@@ -13,7 +13,7 @@ namespace RestarauntsByCuisine
 
       builder.Services.AddControllersWithViews();
 
-      builder.Services.AddDbContext<RestarauntsByCuisineContext>(
+      builder.Services.AddDbContext<RestaurantsByCuisineContext>(
                         dbContextOptions => dbContextOptions
                           .UseMySql(
                             builder.Configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(builder.Configuration["ConnectionStrings:DefaultConnection"]
