@@ -8,6 +8,7 @@
 * database naming conventions with Entity Framework
     * database column names/case must match property names/case of Models
     * name primary keys with the word Id and the class name thus ProductId
+
 ``` mermaid
 flowchart TB
 
