@@ -12,7 +12,7 @@
 ``` mermaid
 flowchart TB
 
-  DB((RestaurantByCuisine database))
+  DB((RestaurantByCuisine db           .     ))
 
   subgraph Cuisines
     r1("CuisineId")
@@ -44,6 +44,6 @@ flowchart TB
   classDef pink fill:#E17A9B,stroke:#333,stroke-width:5px,font-size:1rem,font-weight:700,color:black
   classDef forestGreen fill:#027F55,stroke:#333,stroke-width:2px,font-size:3rem,font-weight:700
   classDef yellow fill:#FDF046,stroke:#333,stroke-width:2px,font-size:1.5rem,font-weight:700,color:black
-  classDef purple fill:#D183FD,stroke:#333,stroke-width:2px,font-size:1.5rem,font-weight:700,color:black
+  classDef purple fill:#D183FD,stroke:#333,stroke-width:2px,font-size:1rem,font-weight:600,color:black
 
 ```
